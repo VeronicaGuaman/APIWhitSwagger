@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace APIWithSwagger.Infrastructure
+﻿namespace APIWithSwagger.Infrastructure
 {
     public class Class1
     {
