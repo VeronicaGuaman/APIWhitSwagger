@@ -1,4 +1,5 @@
-﻿using APIWithSwagger.Infrastructure.Data;
+﻿using APIWhitSwagger.Domain.Interfaces;
+using APIWithSwagger.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;

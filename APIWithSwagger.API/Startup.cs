@@ -1,3 +1,4 @@
+using APIWhitSwagger.Domain.Interfaces;
 using APIWithSwagger.Infrastructure.Data;
 using APIWithSwagger.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
