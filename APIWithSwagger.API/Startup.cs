@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace APIWithSwagger.API
 {
@@ -26,7 +29,7 @@ namespace APIWithSwagger.API
 
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
+                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
@@ -37,9 +40,26 @@ namespace APIWithSwagger.API
                 options.AddPolicy("AllowAll",
                     builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "APIWithSwagger.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {
+                              Title = "APIWithSwagger.API", 
+                              Version = "v1",
+                              Description = "Esta documentacion es utilizada en uuna sesion de la comunidad",
+                              TermsOfService = new Uri("https://www.facebook.com/veronicaguamann"),
+                              Contact = new OpenApiContact
+                              {
+                                  Name = "Vero",
+                                  Email = string.Empty,
+                                  Url = new Uri("https://www.facebook.com/veronicaguamann")
+                              }     
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
             });
         }
 

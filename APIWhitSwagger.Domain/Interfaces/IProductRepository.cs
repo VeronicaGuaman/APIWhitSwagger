@@ -1,6 +1,8 @@
-﻿namespace APIWhitSwagger.Domain.Interfaces
+﻿using APIWhitSwagger.Domain.Entities;
+
+namespace APIWhitSwagger.Domain.Interfaces
 {
-    public interface IProductRepository
+    public interface IProductRepository : IRepository<Product>
     {
     }
 }

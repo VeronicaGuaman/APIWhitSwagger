@@ -9,14 +9,15 @@ namespace APIWithSwagger.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected ApplicationDbContext context;
+        protected readonly ApplicationDbContext context;
         protected DbSet<T> table;
-      
+
         public Repository(ApplicationDbContext context)
         {
             this.context = context;
             this.table = context.Set<T>();
         }
+
         public void Save() => context.SaveChanges();
         public async Task SaveAsync() => await context.SaveChangesAsync();
 
@@ -25,15 +26,7 @@ namespace APIWithSwagger.Infrastructure.Repositories
             return table;
         }
 
-        public virtual IEnumerable<T> GetWithPagination(int numeroPagina, int numeroRegistros)
-        {
-            return table
-                .Skip((numeroPagina - 1) * numeroRegistros)
-                .Take(numeroRegistros)
-                .ToList();
-        }
-
-        public virtual T GetByID(object id)
+        public virtual T GetByID(string id)
         {
             return table.Find(id);
         }
@@ -58,9 +51,7 @@ namespace APIWithSwagger.Infrastructure.Repositories
             }
 
             return false;
-
         }
-
 
         public virtual void Delete(object id)
         {
